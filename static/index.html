@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hastebin</title>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="solarized_dark.css" />
+	<link rel="stylesheet" type="text/css" href="application.css" />
+	<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+	<meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+	<div id="key">
+		<div id="pointer" style="display:none;"></div>
+		<div id="box1">
+			<a href="/about.md" class="logo"></a>
+		</div>
+	</div>
+	<div class="container">
+		<div class="textContent">
+			<ul id="messages"></ul>
+			<pre id="box" style="display:none;" class="hljs" tabindex="0"><code></code></pre>
+			<textarea placeholder="Coller le contenu" rows="5" cols="80" spellcheck="false"
+				style="display:none;"></textarea>
+		</div>
+		<div class="settings">
+			<div class="list">
+				<div id="box2">
+					<button class="save function button-picture">Save</button>
+					<button class=" new function button-picture">New</button>
+					<button class="duplicate function button-picture">Duplicate & Edit</button>
+					<button class="raw function button-picture">Just Text</button>
+					<button class="twitter function button-picture">Twitter</button>
+				</div>
+				<div id="box3" style="display:none;">
+					<div class="label"></div>
+					<div class="shortcut"></div>
+				</div>
+			</div>
+			<div class="content">
+				<p>
+					Bienvenue sur <strong>Securbin</strong> une version remaniée de Hastebin crée par John Crepezzi,
+					cette version est pour le moment un fork du project original, mais il sera bientot remaniée .
+				</p>
+				<div class="new">
+					<p><span>Nouveau</span> Vous pouvez maintenant partager vos fichiers plus facilement</p>
+					<div class="copy">
+						<form>
+							<input type="text" value="https://securx.tk/bin">
+							<button type="button">Copy</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<script src=" https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="highlight.min.js"></script>
+	<script src="application.min.js"></script>
+
+	<script>
+		var app = null;
+		// Handle pops
+		var handlePop = function (evt) {
+			var path = evt.target.location.pathname;
+			if (path === '/') { app.newDocument(true); }
+			else { app.loadDocument(path.substring(1, path.length)); }
+		};
+		// Set up the pop state to handle loads, skipping the first load
+		// to make chrome behave like others:
+		// http://code.google.com/p/chromium/issues/detail?id=63040
+		setTimeout(function () {
+			window.onpopstate = function (evt) {
+				try { handlePop(evt); } catch (err) { /* not loaded yet */ }
+			};
+		}, 1000);
+		// Construct app and load initial path
+		$(function () {
+			app = new haste('Hastebin', { twitter: false });
+			handlePop({ target: window });
+		});
+	</script>
+</body>
+</html>
