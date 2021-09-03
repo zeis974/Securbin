@@ -19,7 +19,7 @@
   },
   "main": "haste",
   "dependencies": {
-    "busboy": "0.2.4",
+    "busboy": "0.3.1",
     "connect": "^3.7.0",
     "connect-ratelimit": "0.0.7",
     "connect-route": "0.1.5",
@@ -27,7 +27,7 @@
     "redis": "0.8.1",
     "redis-url": "0.1.0",
     "st": "^2.0.0",
-    "uglify-js": "^3.14.0",
+    "uglify-js": "^3.14.1",
     "winston": "^2.0.0"
   },
   "devDependencies": {
