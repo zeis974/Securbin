@@ -159,6 +159,10 @@ haste.prototype.newDocument = function (hideHistory) {
   });
   this.removeLineNumbers();
 };
+					setTimeout(function () {
+						console.log(window.location.href)
+						copyButton.removeAttribute('disabled', '')
+					}, 500)
 
 // Map of common extensions
 // Note: this list does not need to include anything that IS its extension,
@@ -397,40 +401,54 @@ $(function () {
 
 });
 
-// Copy URL
+const copyButton = document.querySelector("#copy")
+const copyCodeButton = document.querySelector("#copyCode")
+const codeContainer = document.querySelector("code")
 
-function copyToClipboard(text) {
-  try {
-    var dummy = document.createElement("input");
-    document.body.appendChild(dummy);
-    dummy.setAttribute('value', text);
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
-  } catch (err) {
-    console.log(err);
-  }
+copyButton.addEventListener('click', copyUrl)
+copyCodeButton.addEventListener('click', copyCode)
+
+function copyUrl() {
+	navigator.clipboard.writeText(window.location.href).then(function () {
+		copyButton.style.background = '#2ecc71'
+		setTimeout(function () {
+			copyButton.style.background = 'white'
+		}, 3000)
+	}, function () {
+		console.warn("Echec de l'écriture dans le presse papiers")
+	});
 }
 
-function copyURL() {
-  copyToClipboard(document.location.href)
-  console.log('clique');
+function copyCode() {
+	navigator.clipboard.writeText(codeContainer.textContent).then(function () {
+		copyCodeButton.style.background = '#2ecc71'
+		setTimeout(function () {
+			copyCodeButton.style.background = 'white'
+		}, 3000)
+	}, function () {
+		console.warn("Echec de l'écriture dans le presse papiers")
+	});
 }
 
-(function () {
-  var copyButton = document.querySelector('.copy button');
-  var copyInput = document.querySelector('.copy input');
-  var host = 'https://securx.tk/bin'
-  var hostPathname = document.location.pathname
+function addNewArray() {
+	const list = document.querySelector("#list");
+	let listName = localStorage.getItem("storedFiles").split(",");
 
-  copyButton.addEventListener('click', function (e) {
-    e.preventDefault();
-    copyInput.value = host + hostPathname
-    var text = copyInput.select();
-    document.execCommand('copy');
-  });
+	// var lastListName = listName.reverse()
 
-  copyInput.addEventListener('click', function () {
-    this.select();
-  });
-})();
+	// console.log(lastListName[0])
+	// console.log(listName.pop)
+	// console.log(listName)
+	listName.forEach(function (element, index) {
+		let spanListHref = document.createElement('a')
+		spanListHref.setAttribute('href', '/' + element)
+		list.appendChild(spanListHref)
+
+		spanList.textContent = element + index
+		spanListHref.appendChild(spanList)
+	})
+};
+
+		copyButton.setAttribute('disabled', '')
+	} else copyButton.removeAttribute('disabled', '')
+})()
