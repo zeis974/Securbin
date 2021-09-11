@@ -159,6 +159,22 @@ haste.prototype.newDocument = function (hideHistory) {
   });
   this.removeLineNumbers();
 };
+	// Set the page title and store data - include the appName
+	setTitle(ext) {
+		document.title = `${this.appName}${ext ? ` - ${ext}` : ''}`;
+		if (ext != undefined) {
+			let storedFiles = localStorage.getItem('storedFiles');
+
+			// If no existing data, create an array
+			// Otherwise, convert the localStorage string to an array
+			storedFiles = storedFiles ? storedFiles.split(',') : [];
+
+			// Add a value of the entry does not already exist
+			if (storedFiles.includes(ext) == false) storedFiles.push(ext);
+			// Save back to localStorage
+			localStorage.setItem('storedFiles', storedFiles.toString());
+		} return null
+	}
 					setTimeout(function () {
 						console.log(window.location.href)
 						copyButton.removeAttribute('disabled', '')
@@ -447,8 +463,42 @@ function addNewArray() {
 		spanList.textContent = element + index
 		spanListHref.appendChild(spanList)
 	})
+function addNewArray() {
+	const list = document.querySelector("#list");
+	const documentNotFound = document.querySelector("#list p");
+
+	if (localStorage.getItem("storedFiles") != null) {
+		let listName = localStorage.getItem("storedFiles").split(",");
+
+		listName.forEach(function (element) {
+			let spanListHref = document.createElement('a')
+			spanListHref.setAttribute('href', '/' + element)
+			list.appendChild(spanListHref)
+
+			let spanList = document.createElement('span')
+			spanList.textContent = element
+			spanListHref.appendChild(spanList)
+		})
+
+		// Display the scrollbar when the number of document is equal to or greater than 7
+		if (listName.length == 7) {
+			list.setAttribute("data-scroll", "true")
+		}
+	}
+
+	// Check if document exist and store them
+	if (list.childNodes.length == 3) {
+		documentNotFound.setAttribute("data-visible", "true")
+	} else {
+		documentNotFound.setAttribute("data-visible", "false")
+	}
 };
 
+(function () {
+	// Add new array if they exist
+	addNewArray()
+	// Check copy button state 
+	if (window.location.pathname === "/") {
 		copyButton.setAttribute('disabled', '')
 	} else copyButton.removeAttribute('disabled', '')
 })()
