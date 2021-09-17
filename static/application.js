@@ -416,6 +416,35 @@ function copyCode() {
 }
 
 
+async function fetchGithubData() {
+	const repoUrl = "https://api.github.com/repos/zeis974/Securbin"
+	const repoUrlTags = repoUrl + "/tags"
+	const repoUrlCommit = repoUrl + "/commits"
+
+	const versionNumber = document.querySelector("#versionNumber")
+	const versionDate = document.querySelector("#versionDate")
+	const versionCommit = document.querySelector("#versionCommit")
+
+	Promise.all([
+		fetch(repoUrl),
+		fetch(repoUrlTags),
+		fetch(repoUrlCommit)
+	]).then(function (res) {
+		// Get a JSON object from each of the responses
+		return Promise.all(res.map(function (res) {
+			return res.json();
+		}));
+	}).then(function (data) {
+		// Log the data to the console
+		// You would do something with both sets of data here
+		versionNumber.textContent = data[1]
+		versionDate.textContent = data[0].updated_at
+		versionCommit.textContent = data[2][0].sha
+	}).catch(function (e) {
+		// if there's an error, log it
+		console.log(e);
+	});
+}
 
 
 function addNewArray() {
