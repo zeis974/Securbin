@@ -380,6 +380,11 @@ $(function () {
 					this.value.substring(endPos, this.value.length);
 				this.focus();
 				this.selectionStart = startPos + myValue.length;
+				this.selectionEnd = startPos + myValue.length;
+				this.scrollTop = scrollTop;
+			}
+			else {
+				this.value += myValue;
 				this.focus();
 			}
 		}
@@ -389,9 +394,17 @@ $(function () {
 const copyButton = document.querySelector("#copy")
 const copyCodeButton = document.querySelector("#copyCode")
 const codeContainer = document.querySelector("code")
+const buttonOpenVersionContainer = document.querySelector("#openVersionContainer")
+const buttonCloseVersionContainer = document.querySelector("#closeVersionContainer")
+const versionContainer = document.querySelector("#versionContainer")
+const main = document.querySelector("main")
+const shareContainer = document.querySelector("#shareContainer")
 
 copyButton.addEventListener('click', copyUrl)
 copyCodeButton.addEventListener('click', copyCode)
+buttonOpenVersionContainer.addEventListener('click', openVersionContainer)
+buttonCloseVersionContainer.addEventListener('click', closeVersionContainer)
+shareContainer.addEventListener('click', openShareContainer)
 
 function copyUrl() {
 	navigator.clipboard.writeText(window.location.href).then(function () {
@@ -415,6 +428,24 @@ function copyCode() {
 	});
 }
 
+function openVersionContainer() {
+	versionContainer.setAttribute("data-visible", "true")
+	main.setAttribute("open-version-container", "")
+	fetchGithubData()
+}
+
+function closeVersionContainer() {
+	versionContainer.setAttribute("data-visible", "false")
+	main.removeAttribute("open-version-container", "")
+}
+
+function openShareContainer() {
+	shareContainer.toggleAttribute("open")
+
+	// if (shareContainer.getAttribute("data-focus", "true") == "true") {
+	// 	shareContainer.setAttribute("data-focus", "false")
+	// }
+}
 
 async function fetchGithubData() {
 	const repoUrl = "https://api.github.com/repos/zeis974/Securbin"
@@ -451,6 +482,8 @@ function addNewArray() {
 	const list = document.querySelector("#list");
 	const documentNotFound = document.querySelector("#list p");
 
+	if (localStorage.getItem('storedFiles') != null) {
+		let listName = localStorage.getItem('storedFiles').split(",");
 
 		listName.forEach(function (element) {
 			let spanListHref = document.createElement('a')
