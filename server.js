@@ -20,7 +20,7 @@ config.host = process.env.HOST || config.host || 'localhost';
 if (config.logging) {
   try {
     winston.remove(winston.transports.Console);
-  } catch(e) {
+  } catch (e) {
     /* was not present */
   }
 
@@ -76,7 +76,7 @@ for (var name in config.documents) {
   data = fs.readFileSync(path, 'utf8');
   winston.info('loading static document', { name: name, path: path });
   if (data) {
-    preferredStore.set(name, data, function(cb) {
+    preferredStore.set(name, data, function (cb) {
       winston.debug('loaded static document', { success: cb });
     }, true);
   }
@@ -108,31 +108,38 @@ if (config.rateLimits) {
 }
 
 // first look at API calls
-app.use(route(function(router) {
+app.use(route(function (router) {
   // get raw documents - support getting with extension
 
-  router.get('/raw/:id', function(request, response) {
+  router.get('/raw/:id', function (request, response) {
     return documentHandler.handleRawGet(request, response, config);
   });
 
-  router.head('/raw/:id', function(request, response) {
+  router.head('/raw/:id', function (request, response) {
     return documentHandler.handleRawGet(request, response, config);
   });
 
   // add documents
 
-  router.post('/documents', function(request, response) {
+  router.post('/documents', function (request, response) {
     return documentHandler.handlePost(request, response);
   });
 
   // get documents
-  router.get('/documents/:id', function(request, response) {
+  router.get('/documents/:id', function (request, response) {
     return documentHandler.handleGet(request, response, config);
   });
 
-  router.head('/documents/:id', function(request, response) {
+  router.head('/documents/:id', function (request, response) {
     return documentHandler.handleGet(request, response, config);
   });
+}));
+
+// Match jQuery module
+app.use(connect_st({
+  path: __dirname + '/node_modules',
+  content: { maxAge: config.staticMaxAge },
+  url: "/node_modules"
 }));
 
 // Otherwise, try to match static files
@@ -145,8 +152,8 @@ app.use(connect_st({
 
 // Then we can loop back - and everything else should be a token,
 // so route it back to /
-app.use(route(function(router) {
-  router.get('/:id', function(request, response, next) {
+app.use(route(function (router) {
+  router.get('/:id', function (request, response, next) {
     request.sturl = '/';
     next();
   });

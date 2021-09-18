@@ -1,271 +1,835 @@
-*, ::before, ::after {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+*,
+::before,
+::after {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+}
+
+html,
+body {
+ height: 100%;
 }
 
 body {
-	background: #34495e;
-	font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+ background: #34495e;
+ font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+  sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
-ul, button {
-	list-style: none;
-	border: none;
-	outline: none;
+/* Global tags styles */
+a,
+a:focus {
+ color: rgba(0, 0, 0, 0.75);
+ text-decoration: none;
 }
 
-.container {
-	/* position: relative; */
-	display: flex;
-	justify-content: center;
-	align-items: center;
+button {
+ border: none;
 }
 
-.textContent {
-	background: #002B36;
-	border-radius: 8px;
-	padding: 10px;
-	width: 70%;
-	height: 90vh;
-	margin: 20px;
-	position: relative;
+/* Main */
+
+main {
+ display: flex;
+ flex-direction: column;
+ background: inherit;
+ color: white;
 }
 
-.settings {
-	position: relative;
-	width: 30%;
-	height: 90vh;
-	margin: 20px;
-	border-radius: 8px;
-	background: white;
+main[open-version-container]::after {
+ content: "";
+ width: 100%;
+ height: 100vh;
+ background: #383838;
+ position: absolute;
+ z-index: 5;
+ opacity: 0.65;
+ transition: 150ms;
+}
+
+main .content {
+ display: flex;
+ height: 20vh;
+ justify-content: center;
+ align-items: center;
+ padding: 60px;
+}
+
+main .content .logo {
+ width: 100px;
+ height: 100px;
+}
+
+main .content .logo a,
+main .content .logo img {
+ width: inherit;
+ height: inherit;
+}
+
+main .content h1 {
+ padding: 7px 5px;
+ font-size: 3em;
+ color: white;
+}
+
+/* Container */
+
+section.container {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ height: 75vh;
+ position: absolute;
+ bottom: 0;
+ margin-bottom: 10px;
+ padding: 5px 10px;
+}
+
+section.container > div {
+ display: inherit;
+ position: relative;
+ max-width: 1500px;
+ width: inherit;
+ height: 100%;
+ max-height: 1000px;
+ justify-content: center;
+ align-items: center;
+}
+
+section.container .textContent {
+ flex: 10;
+ background: #1c1b1b;
+ padding: 10px 5px;
+ width: 70%;
+ height: 100%;
+ position: relative;
+}
+
+/* Settings Container */
+
+section.container .settings {
+ position: relative;
+ z-index: 2;
+ flex: 0.5;
+ height: 100%;
+ border-radius: 8px 0 0 8px;
+ background: white;
+}
+
+.settings > div {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ align-items: center;
+ height: 100%;
+ justify-content: center;
+}
+
+.settings > div .icons {
+ position: relative;
+ background: url("./img/spriteIcons.svg");
+ width: 30px;
+ height: 25px;
+ margin: 10px;
+ transform: scale(1.5);
+ cursor: auto;
+ transition: 150ms ease-in;
+}
+
+.settings > div .icons.enabled {
+ cursor: pointer;
+}
+
+.settings > div .icons .shortcut {
+ font-size: 0.6em;
+ display: none;
+ visibility: hidden;
+ left: 45px;
+ white-space: nowrap;
+ position: absolute;
+ background: white;
+ color: black;
+ border-radius: 3px;
+ padding: 5px;
+ animation: 92.1986ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 0ms 1 normal none
+  running popUpAnimation;
+}
+
+.settings > div .icons:hover .shortcut,
+.settings > div .icons:focus .shortcut {
+ display: none;
+ visibility: hidden;
+}
+
+.settings > div .icons.enabled:hover .shortcut,
+.settings > div .icons.enabled:focus .shortcut {
+ display: block;
+ visibility: inherit;
+}
+
+.settings > div .icons .shortcut::before {
+ justify-content: center;
+ display: flex;
+ border-width: 5px 7px 5px 0;
+ left: -6px;
+ top: 30%;
+ content: "\A";
+ border-style: solid;
+ border-color: transparent #fff transparent transparent;
+ position: absolute;
+}
+
+/* Control caption */
+.settings > div .icons span > span {
+ color: red;
+}
+
+/* Save sheet icon*/
+.settings > div .icons[data-icon="save"] {
+ background-position: 0 0;
+}
+
+.settings > div .icons[data-icon="save"].enabled {
+ background-position: 30px 0;
+}
+
+/* New sheet icon*/
+.settings > div .icons[data-icon="new"] {
+ background-position: 0px 50px;
+}
+
+.settings > div .icons[data-icon="new"].enabled {
+ background-position: 30px 50px;
+}
+
+/* Duplicate sheet icon */
+.settings > div .icons[data-icon="duplicate"] {
+ background-position: 0px 75px;
+}
+
+.settings > div .icons[data-icon="duplicate"].enabled {
+ background-position: 30px 75px;
+}
+
+/* Text sheet icon */
+.settings > div .icons[data-icon="raw"] {
+ background-position: 0 25px;
+}
+
+.settings > div .icons[data-icon="raw"].enabled {
+ background-position: 30px 25px;
 }
 
 .settings .list {
-	min-height: 100px;
+ min-height: 100px;
 }
 
 .settings .content {
-	top: 20px;
-	padding: 5px 20px;
+ top: 20px;
+ padding: 5px 20px;
 }
 .settings .content p:first-child {
-	text-align: center;
+ text-align: center;
 }
 
 .settings .content .new {
-	margin-top: 30px;
-	background: hsla(145, 63%, 49%, 60%);
-	padding: 10px;
-	border-radius: 3px;
+ margin-top: 30px;
+ background: hsla(145, 63%, 49%, 60%);
+ padding: 10px;
+ border-radius: 3px;
 }
 
 .settings .content .new span {
-	color: green;
-	display: block;
-	border: 1px solid green;
-	border-radius: 5px;
-	font-weight: 500;
-	padding: 3px;
+ color: green;
+ display: block;
+ border: 1px solid green;
+ border-radius: 5px;
+ font-weight: 500;
+ padding: 3px;
 }
 
 .settings .content .new form {
-	position: relative;
-	width: 100%;
-	margin-top: 15px;
+ position: relative;
+ width: 100%;
+ margin-top: 15px;
 }
 
 .settings .content .new .copy::after {
-	display: flex;
-    content: 'Recharger la page avant de copier l\'url';
-	justify-content: center;
-    color: red;
-    font-weight: 500;
-    font-size: 15px;
-	text-align: center;
+ display: flex;
+ content: "Recharger la page avant de copier l'url";
+ justify-content: center;
+ color: red;
+ font-weight: 500;
+ font-size: 15px;
+ text-align: center;
 }
 
 .settings .content .new form input {
-	display: block;  
-	width: 100%;
-	border: 1px solid;
-	background: #FFF;
-	font-size: 15px;
-	padding: 5px 4px;
-	margin-bottom: 20px;
+ display: block;
+ width: 100%;
+ border: 1px solid;
+ background: #fff;
+ font-size: 15px;
+ padding: 5px 4px;
+ margin-bottom: 20px;
 }
 
 .settings .content .new form button {
-	display: block;
-	position: absolute;
-	top: 0;
-	right: -3px;
-	height: 100%;
-	color: #FFF;
-	border-radius: 0 3px 3px 0;
-	background: #000;
-	font-family: 'VT323', monospace;
-	font-size: 15px;
-	text-transform: uppercase;
-	padding: 0.08em 0.8em;
-	cursor: pointer;
+ display: block;
+ position: absolute;
+ top: 0;
+ right: -3px;
+ height: 100%;
+ color: #fff;
+ border-radius: 0 3px 3px 0;
+ background: #000;
+ font-family: "VT323", monospace;
+ font-size: 15px;
+ text-transform: uppercase;
+ padding: 0.08em 0.8em;
+ cursor: pointer;
+}
+
+/* Share Container */
+
+section.container .share {
+ flex: 2;
+ background: #c4c4c4;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ width: 100px;
+ height: 100%;
+ padding: 10px;
+}
+
+.share .copy,
+.share .create,
+.share .about {
+ background: rgba(255, 255, 255, 0.25);
+ box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+ backdrop-filter: blur(4px);
+ -webkit-backdrop-filter: blur(4px);
+ border-radius: 8px;
+ background: #c4c4c4;
+}
+
+.share .copy {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ text-align: center;
+ padding: 10px;
+ color: black;
+}
+
+.share .copy span {
+ color: #2c3e50;
+ font-weight: 500;
+}
+
+.share .copy button {
+ padding: 5px;
+ border-radius: 3px;
+ font-size: 1.01em;
+ margin-top: 10px;
+ cursor: pointer;
+ transition: 150ms;
+}
+
+.share .copy button[disabled] {
+ background: #a5a5a5;
+ cursor: auto;
+}
+
+/* Create Container */
+
+.share .create {
+ padding: 10px;
+ margin-top: 5px;
+ max-height: 365px;
+}
+
+.share .create p {
+ position: relative;
+ color: #2c3e50;
+ font-weight: 500;
+ text-align: center;
+ width: 100%;
+}
+
+.share .create > p::before {
+ content: "";
+ position: absolute;
+ width: 100%;
+ height: 25px;
+ bottom: -25px;
+ left: 0;
+ background: linear-gradient(
+  180deg,
+  rgb(196 196 196) 25%,
+  rgba(254, 20, 10, 0) 100%
+ );
+ z-index: 3;
+}
+
+/* About Container */
+
+.share .about {
+ text-align: center;
+ margin-top: 5px;
+ padding: 5px;
+ color: #2c3e50;
+ font-weight: 500;
+}
+
+.share .about .reseau #openVersionContainer {
+ cursor: pointer;
+}
+
+/* Version Container */
+
+#versionContainer {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ background: rgb(255 255 255 / 20%);
+ box-shadow: 0 8px 14px 0 rgb(132 132 132 / 37%);
+ backdrop-filter: blur(4px);
+ -webkit-backdrop-filter: blur(4px);
+ border-radius: 10px;
+ border: 1px solid rgba(255, 255, 255, 0.18);
+ position: absolute;
+ height: 300px;
+ left: 50%;
+ border-radius: 8px;
+ width: 500px;
+ z-index: 6;
+ top: 50%;
+ transform: translate(-50%, -50%);
+ animation: scaleTransition 700ms cubic-bezier(0.18, 0.89, 0.32, 1.28) alternate;
+}
+
+#versionContainer[data-visible="true"] {
+ display: flex;
+ visibility: visible;
+}
+
+#versionContainer[data-visible="false"] {
+ display: none;
+ visibility: hidden;
+}
+
+#versionContainer button {
+ position: absolute;
+ transition: 200ms;
+ bottom: 0;
+ right: 0;
+ font-size: 1em;
+ border-radius: 3px;
+ margin: 10px;
+ padding: 3px 5px;
+ transition: 150ms;
+ cursor: pointer;
+}
+
+#versionContainer button:hover {
+ box-shadow: 0 0 7px 0px rgba(0, 0, 0, 0.34);
+}
+
+@keyframes scaleTransition {
+ 0% {
+  transform: translate(-50%, -50%) scale(1);
+ }
+ 50% {
+  transform: translate(-50%, -50%) scale(1.1);
+ }
+ 100% {
+  transform: translate(-50%, -50%) scale(1);
+ }
+}
+
+/* Warning */
+
+#warning {
+ display: inherit;
+ align-items: center;
+ justify-content: center;
+ position: absolute;
+ top: -25px;
+ z-index: 3;
+ height: 30px;
+ border-radius: 8px 8px 0 0;
+ width: 100%;
+ background: #e74c3c;
+ left: 0;
+ text-align: center;
+}
+
+/* List Container */
+
+#list {
+ display: flex;
+ padding: 10px 5px;
+ flex-direction: column-reverse;
+ max-height: 300px;
+ overflow-y: scroll;
+}
+
+#list p[data-visible="true"] {
+ margin-top: 20px;
+ visibility: visible;
+ display: block;
+}
+
+#list p[data-visible="false"] {
+ visibility: hidden;
+ display: none;
+}
+
+#list[data-scroll="false"] {
+ overflow-y: hidden !important;
+}
+
+/* Works on Chrome, Edge, and Safari */
+#list[data-scroll="true"]::-webkit-scrollbar {
+ width: 8px;
+ position: absolute;
+}
+
+#list[data-scroll="true"]::-webkit-scrollbar-track {
+ background: transparent;
+}
+
+#list[data-scroll="true"]::-webkit-scrollbar-thumb {
+ background-color: gray;
+ border-radius: 20px;
+ border: 3px solid #a4aebb;
+ transition: 150ms;
+}
+
+#list[data-scroll="true"]:hover::-webkit-scrollbar-thumb {
+ background-color: blue;
+ border-radius: 20px;
+ border: 3px solid #a4aebb;
+}
+
+#list a {
+ position: relative;
+ display: flex;
+ justify-content: center;
+ text-align: center;
+ align-items: center;
+ padding: 6px;
+ border-radius: 8px;
+ margin: 5px 0;
+ background: white;
+ border: 2px solid gray;
+ transition: 150ms;
+}
+
+#list a::before {
+ content: "";
+ width: 30px;
+ height: 30px;
+ position: absolute;
+ left: 0;
+ background: url("./img/fileIcons.svg");
+}
+
+#list a:hover,
+#list a:visited:hover {
+ border: 2px solid #00a245;
+ background: #2ecc71;
+}
+
+#list a:visited {
+ color: black;
+ background-color: #cdcdcd;
+}
+
+#list::-webkit-scrollbar-track {
+ -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ border-radius: 10px;
+ background-color: #f5f5f5;
+}
+
+#list::-webkit-scrollbar {
+ width: 12px;
+ background-color: #f5f5f5;
+}
+
+#list::-webkit-scrollbar-thumb {
+ border-radius: 10px;
+ -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ background-color: #555;
+}
+
+/* copyCodeButton */
+
+#copyCode {
+ position: absolute;
+ width: 35px;
+ height: 35px;
+ background: white;
+ right: 0;
+ margin: 5px 40px;
+ border-radius: 3px;
+ transition: 70ms;
+ cursor: pointer;
+ display: none;
+ opacity: 1;
+ animation: 92.1986ms cubic-bezier(0.18, 0.89, 0.32, 1.28) 0ms 1 normal none
+  running popUpAnimation;
+}
+
+#copyCode svg {
+ width: 35px;
+ height: 35px;
+ display: flex;
+ position: absolute;
+ top: 0;
+ padding: 5px;
+}
+
+#copyCode:hover {
+ background: rgba(255, 255, 255, 0.75);
 }
 
 textarea {
-	background: transparent;
-	overflow: auto;
-	border: 0px;
-	color: #fff;
-	padding: 0px;
-	width: 100%;
-	height: 100%;
-	font-family: monospace;
-	outline: none;
-	resize: none;
-	overflow-y: scroll!important;
-	font-size: 13px;
-	margin-top: 0;
-	margin-bottom: 0;
+ background: transparent;
+ overflow: auto;
+ border: 0px;
+ color: #fff;
+ padding: 0px;
+ width: 100%;
+ height: 100%;
+ font-family: monospace;
+ outline: none;
+ resize: none;
+ overflow-y: scroll !important;
+ font-size: 13px;
+ margin-top: 0;
+ margin-bottom: 0;
 }
 
 /* the line numbers */
 
-#linenos {
-  /* color: #7d7d7d; */
-  z-index: -1000;
-  position: absolute;
-  top: 20px;
-  left: 0px;
-  width: 30px; /* 30 to get 20 away from box */
-  font-size: 13px;
-  font-family: monospace;
-  text-align: right;
-  user-select: none;
+.numbers {
+ color: #7d7d7d;
+ height: 100%;
+ width: fit-content;
+ font-size: 13px;
+ font-family: monospace;
+ text-align: right;
+ user-select: none;
 }
 
 /* code box when locked */
 
-#box {
-	width: 100%;
-	height: 100%;
-	border: 0px;
-	outline: none;
-	font-size: 13px;
-	overflow-y: scroll;
+#codeContainer {
+ display: flex;
+ width: 100%;
+ height: 100%;
+ border: 0px;
+ outline: none;
+ font-size: 13px;
+ overflow-y: scroll;
 }
 
-#box code {
-	padding: 0px;
-	background: transparent !important; /* don't hide hastebox */
+#codeContainer code {
+ padding: 0px;
+ padding-left: 5px;
+ background: transparent !important;
 }
 
-#box1 {
-	padding: 5px;
-	text-align: center;
-	background: #00222b;
+#codeContainer:hover #copyCode {
+ display: block;
 }
 
-#box2 {
-	background: #08323c;
-	border-radius: 5px 5px 0 0;
-	text-align: center;
-	font-size: 0;
-	padding: 0px 5px;
+/* for block of numbers */
+.hljs-ln-numbers {
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
+
+ text-align: center;
+ color: #ccc;
+ border-right: 1px solid #ccc;
+ vertical-align: top;
+ padding-right: 5px;
 }
 
-#box1 a.logo, #box1 a.logo:visited {
-	display: inline-block;
-	background: url(logo.png);
-	width: 126px;
-	height: 42px;
+/* for block of code */
+.hljs-ln-code {
+ padding-left: 20px;
 }
 
-#box1 a.logo:hover {
-	background-position: 0 bottom;
+.hljs-ln {
+ position: relative;
+ padding-left: 3em !important;
 }
 
-#box2 .function {
-	background: url(function-icons.png);
-	width: 32px;
-	height: 37px;
-	display: inline-block;
-	position: relative;
+.hljs-ln .ln-bg {
+ position: absolute;
+ z-index: 1;
+ top: 0;
+ left: 0;
+ width: 2.2em;
+ height: 100%;
+ border-right: 1px solid #555;
+ background: rgba(255, 255, 255, 0.18);
 }
 
-#box2 .link embed {
-	vertical-align: bottom; /* fix for zeroClipboard style */
+.hljs-ln .ln-num {
+ position: relative;
+ display: inline-block;
+ height: 1em;
+ -webkit-touch-callout: none;
+ -webkit-user-select: none;
+ -khtml-user-select: none;
+ -moz-user-select: none;
+ -ms-user-select: none;
+ user-select: none;
 }
 
-#box2 .function.enabled:hover {
-	cursor: hand;
-	cursor: pointer;
+.hljs-ln .ln-num::before {
+ position: absolute;
+ z-index: 2;
+ top: 0;
+ right: 0;
+ margin-right: 1em;
+ color: #777;
+ font-style: normal;
+ font-weight: normal;
+ content: attr(data-num);
 }
 
-#pointer {
-	display: block;
-	height: 5px;
-	width: 10px;
-	background: url(hover-dropdown-tip.png);
-	bottom: 0px;
-	position: absolute;
-	margin: auto;
-	left: 0px;
-	right: 0px;
+@keyframes popUpAnimation {
+ 0% {
+  transform: scale(1);
+ }
+ 50% {
+  transform: scale(1.1);
+  display: block;
+ }
+ 100% {
+  transform: scale(1);
+ }
 }
 
-#box3, #messages li {
-	background: #173e48;
-	font-family: Helvetica, sans-serif;
-	font-size: 12px;
-	line-height: 14px;
-	padding: 10px 15px;
-	user-select: none;
+@media screen and (max-width: 880px) {
+ body {
+  overflow-y: hidden;
+ }
+ main .content {
+  padding: 10px 30px;
+ }
+
+ main .content .logo {
+  width: 80px;
+  height: 80px;
+ }
+
+ main .content h1 {
+  font-size: 1.5em;
+ }
+
+ section.container > div {
+  flex-direction: column;
+  position: initial;
+ }
+
+ .settings > div .icons:hover .shortcut,
+ .settings > div .icons:focus .shortcut,
+ .settings > div .icons.enabled:hover .shortcut,
+ .settings > div .icons.enabled:focus .shortcut {
+  display: none;
+  visibility: hidden;
+ }
+
+ section.container .settings {
+  width: 100%;
+  border-radius: 0;
+ }
+
+ .settings > div {
+  flex-direction: row;
+  justify-content: space-around;
+ }
+
+ section.container .textContent {
+  width: 100%;
+ }
+
+ section.container .share {
+  width: 100%;
+  border-radius: 20px 20px 0 0;
+  position: absolute;
+  z-index: 3;
+  transform: translateY(calc(100% - 50px));
+  transition: 150ms;
+
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+ }
+
+ section.container .share::after {
+  content: "";
+  width: 100px;
+  height: 5px;
+  background: gray;
+  position: absolute;
+  top: 4%;
+  border-radius: 8px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+ }
+
+ section.container .share[open] {
+  transform: translateY(0);
+ }
+
+ .share .copy {
+  margin-top: 20px;
+ }
+
+ #warning {
+  font-size: 0.8em;
+  position: initial;
+ }
+
+ #list,
+ #list[data-scroll="false"] {
+  max-height: 200px;
+  overflow-y: scroll !important;
+ }
+
+ #versionContainer {
+  width: 330px;
+ }
 }
 
-#box3 .label, #messages li {
-	color: #fff;
-	font-weight: bold;
+/* Iphone SE */
+
+@media screen and (max-width: 320px) {
+ #versionContainer {
+  width: 300px;
+ }
+
+ #versionContainer div {
+  word-break: break-all;
+  width: inherit;
+ }
 }
-
-#box3 .shortcut {
-	color: #c4dce3;
-	font-weight: normal;
-}
-
-#box2 .function.save { background-position: -5px top; }
-#box2 .function.enabled.save { background-position: -5px center; }
-#box2 .function.enabled.save:hover { background-position: -5px bottom; }
-
-#box2 .function.new { background-position: -42px top; }
-#box2 .function.enabled.new { background-position: -42px center; }
-#box2 .function.enabled.new:hover { background-position: -42px bottom; }
-
-#box2 .function.duplicate { background-position: -79px top; }
-#box2 .function.enabled.duplicate { background-position: -79px center; }
-#box2 .function.enabled.duplicate:hover { background-position: -79px bottom; }
-
-#box2 .function.raw { background-position: -116px top; }
-#box2 .function.enabled.raw { background-position: -116px center; }
-#box2 .function.enabled.raw:hover { background-position: -116px bottom; }
-
-#box2 .function.twitter { background-position: -153px top; }
-#box2 .function.enabled.twitter { background-position: -153px center; }
-#box2 .function.enabled.twitter:hover { background-position: -153px bottom; }
-#box2 .button-picture{ border-width: 0; font-size: inherit; }
-
-#messages {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-#messages li {
-	background:rgba(23,62,72,0.8);
-	margin:0 auto;
-	list-style:none;
-}
-
-#messages li.error {
-	background:rgba(102,8,0,0.8);
-}
-

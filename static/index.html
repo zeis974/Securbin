@@ -1,85 +1,148 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Hastebin</title>
-	<meta charset="UTF-8" />
-	<link rel="stylesheet" href="solarized_dark.css" />
-	<link rel="stylesheet" type="text/css" href="application.css" />
-	<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-	<meta name="robots" content="noindex,nofollow" />
-</head>
-<body>
-	<div id="key">
-		<div id="pointer" style="display:none;"></div>
-		<div id="box1">
-			<a href="/about.md" class="logo"></a>
-		</div>
-	</div>
-	<div class="container">
-		<div class="textContent">
-			<ul id="messages"></ul>
-			<pre id="box" style="display:none;" class="hljs" tabindex="0"><code></code></pre>
-			<textarea placeholder="Coller le contenu" rows="5" cols="80" spellcheck="false"
-				style="display:none;"></textarea>
-		</div>
-		<div class="settings">
-			<div class="list">
-				<div id="box2">
-					<button class="save function button-picture">Save</button>
-					<button class=" new function button-picture">New</button>
-					<button class="duplicate function button-picture">Duplicate & Edit</button>
-					<button class="raw function button-picture">Just Text</button>
-					<button class="twitter function button-picture">Twitter</button>
-				</div>
-				<div id="box3" style="display:none;">
-					<div class="label"></div>
-					<div class="shortcut"></div>
-				</div>
-			</div>
-			<div class="content">
-				<p>
-					Bienvenue sur <strong>Securbin</strong> une version remaniée de Hastebin crée par John Crepezzi,
-					cette version est pour le moment un fork du project original, mais il sera bientot remaniée .
-				</p>
-				<div class="new">
-					<p><span>Nouveau</span> Vous pouvez maintenant partager vos fichiers plus facilement</p>
-					<div class="copy">
-						<form>
-							<input type="text" value="https://securx.tk/bin">
-							<button type="button">Copy</button>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8" />
+  <title>Securbin | Share and edit easily</title>
+  <meta description="" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="application.css" />
+  <link rel="stylesheet" href="stackoverflow-dark.min.css" />
+  <meta name="robots" content="noindex,nofollow" />
+ </head>
+ <body>
+  <main>
+   <div class="content">
+    <div class="logo">
+     <a href="/">
+      <img src="img/Logo.svg" alt="Logo de Securbin" />
+     </a>
+    </div>
+    <h1>Partager et editer facilement</h1>
+   </div>
+   <section class="container">
+    <div>
+     <p id="warning">Ces fonctionnalités sont encore expérimentales !</p>
+     <div class="settings">
+      <div>
+       <span class="icons save" data-icon="save" tabindex="0">
+        <span class="shortcut"
+         >Sauvegarder<br />
+         <span>ᴄᴏɴᴛʀᴏʟ + s</span>
+        </span>
+       </span>
+       <span class="icons new" data-icon="new" tabindex="0">
+        <span class="shortcut"
+         >Nouveau<br />
+         <span>ᴄᴏɴᴛʀᴏʟ + ɴ</span>
+        </span>
+       </span>
+       <span class="icons duplicate" data-icon="duplicate" tabindex="0">
+        <span class="shortcut"
+         >Dupliquer<br />
+         <span>ᴄᴏɴᴛʀᴏʟ + ᴅ </span>
+        </span>
+       </span>
+       <span class="icons raw" data-icon="raw" tabindex="0">
+        <span class="shortcut"
+         >Afficher le texte<br />
+         <span>ᴄᴏɴᴛʀᴏʟ + sʜɪғᴛ + ʀ</span>
+        </span>
+       </span>
+      </div>
+     </div>
+     <div class="textContent">
+      <ul id="messages"></ul>
+      <pre id="codeContainer" style="display: none" class="hljs" tabindex="0">
+        <div class="numbers"></div>
+        <code></code>
+        <div id="copyCode">
+        <svg width="59" height="69" viewBox="0 0 59 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 18V4C16 3.44772 16.4477 3 17 3H43C43.5523 3 44 3.44772 44 4V18C44 18.5523 43.5523 19 43 19H17C16.4477 19 16 18.5523 16 18Z" stroke="black" stroke-width="5" stroke-linecap="round"/>
+            <path d="M8 8L3.3753 11.6998C3.13809 11.8895 3 12.1768 3 12.4806V65C3 65.5523 3.44772 66 4 66H55.5C56.0523 66 56.5 65.5523 56.5 65V12.4491C56.5 12.1634 56.3779 11.8914 56.1644 11.7017L52 8" stroke="black" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+        </div>
+    </pre>
+      <textarea
+       placeholder="&lt;h1&gt;Hello world !&lt;/h1&gt;"
+       rows="5"
+       cols="80"
+       spellcheck="false"
+       style="display: none"
+      ></textarea>
+     </div>
+     <div class="share" id="shareContainer" data-focus="false">
+      <div class="copy">
+       <span>Copier l'url du fichier</span>
+       <button type="button" id="copy" disabled>Copier</button>
+      </div>
+      <div class="create">
+       <p>Fichiers récents</p>
+       <div id="list" data-scroll="false">
+        <p>Aucun fichier n'est sauvegardé</p>
+       </div>
+      </div>
+      <div class="about">
+       <span>Ça fontionne comment ?</span>
+       <div class="reseau">
+        <span
+         ><a
+          href="https://github.com/zeis974/Securbin"
+          target="_blank"
+          rel="noopener"
+          >Github</a
+         ></span
+        >
+        • <span><a href="">Twitter</a></span> •
+        <span id="openVersionContainer">Version</span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <div id="versionContainer" data-visible="false">
+    <div>
+     <p>Version : <span id="versionNumber"> ...</span></p>
+     <p>Commit : <span id="versionCommit"> ...</span></p>
+     <p>Date : <span id="versionDate"> ...</span></p>
+    </div>
+    <button id="closeVersionContainer">Fermer</button>
+   </div>
+  </main>
 
-	<script src=" https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="highlight.min.js"></script>
-	<script src="application.min.js"></script>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script>
+   let app = null;
+   // Handle pops
+   var handlePop = function (evt) {
+    let path = evt.target.location.pathname;
+    if (path === "/") {
+     app.newDocument(true);
+    } else {
+     app.loadDocument(path.substring(1, path.length));
+    }
+   };
+   // Set up the pop state to handle loads, skipping the first load
+   // to make chrome behave like others:
+   // http://code.google.com/p/chromium/issues/detail?id=63040
+   setTimeout(function () {
+    window.onpopstate = function (evt) {
+     try {
+      handlePop(evt);
+     } catch (err) {
+      /* not loaded yet */
+     }
+    };
+   }, 1000);
 
-	<script>
-		var app = null;
-		// Handle pops
-		var handlePop = function (evt) {
-			var path = evt.target.location.pathname;
-			if (path === '/') { app.newDocument(true); }
-			else { app.loadDocument(path.substring(1, path.length)); }
-		};
-		// Set up the pop state to handle loads, skipping the first load
-		// to make chrome behave like others:
-		// http://code.google.com/p/chromium/issues/detail?id=63040
-		setTimeout(function () {
-			window.onpopstate = function (evt) {
-				try { handlePop(evt); } catch (err) { /* not loaded yet */ }
-			};
-		}, 1000);
-		// Construct app and load initial path
-		$(function () {
-			app = new haste('Hastebin', { twitter: false });
-			handlePop({ target: window });
-		});
-	</script>
-</body>
+   //  Construct app and load initial path
+   $(function () {
+    app = new haste("Securbin", { twitter: false });
+    handlePop({ target: window });
+   });
+  </script>
+  <script src="highlight.min.js"></script>
+  <script src="application.min.js"></script>
+ </body>
 </html>
