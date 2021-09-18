@@ -1,6 +1,6 @@
 {
-  "name": "haste",
-  "version": "0.1.0",
+  "name": "securbin",
+  "version": "2.0.0",
   "private": true,
   "description": "A fork of Hastebin reworked for Securx",
   "keywords": [
