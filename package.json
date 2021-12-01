@@ -28,7 +28,7 @@
     "redis": "0.8.1",
     "redis-url": "0.1.0",
     "st": "^2.0.0",
-    "uglify-js": "^3.14.2",
+    "uglify-js": "^3.14.4",
     "winston": "^2.0.0"
   },
   "devDependencies": {
