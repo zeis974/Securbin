@@ -32,7 +32,7 @@
     "winston": "^2.0.0"
   },
   "devDependencies": {
-    "mocha": "^9.2.0"
+    "mocha": "^10.2.0"
   },
   "bin": {
     "haste-server": "./server.js"
